@@ -1,14 +1,31 @@
 <html>
-<head>
+<head>    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>    
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
     <style>
-        body { font-family: arial; margin: 20px; }
+        body { margin: 20px; }
         td { padding: 5px; }
         .bullish { background: green; color: white; }
         .bearish { background: red; color: white; }
     </style>
+ 
 </head>
-<body>
+<body>     
     <h1>Candlestick Pattern Scanner</h1>
+    <form>
+        <select name="interval">
+            <option value="">-- Select Interval --</option>
+            {% for key in interval_dict %}
+                <option value="{{ key }}" {% if interval == key %}selected="selected"{% endif %}>{{ key }}</option>
+            {% endfor %}
+        </select>
+
+        <!-- <input  type="submit" value="Refresh Data" /> -->
+        <button onclick="location.href='/snapshot'"> Refresh Data </button>
+    </form>
     <form>
         <select name="pattern">
             <option value="">-- Select a Pattern --</option>
@@ -18,13 +35,16 @@
         </select>
 
         <input type="submit" value="Scan" />
-    </form>
+    </form>   
+
+
+    <!-- <button onclick="location.href='/snapshot'"> Refresh Data </button> -->
 
     <table>
         <tr>
-            <th>symbol</th>
-            <th>company</th>
-            <th>signal</th>
+            <th id="symbol"></th>
+            <th id="company"></th>
+            <th id="signal"></th>
         </tr>
         {% for stock in stocks %}
             {% if stocks[stock][pattern] %}
